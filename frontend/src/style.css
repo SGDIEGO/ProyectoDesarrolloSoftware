@@ -1,0 +1,86 @@
+html {
+  background-color: rgba(27, 38, 54, 1);
+  text-align: center;
+  color: white;
+}
+
+body {
+  margin: 0;
+  color: white;
+  font-family: "Trirong", serif;
+}
+
+@font-face {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
+}
+
+#app {
+  height: 100vh;
+  text-align: center;
+}
+
+.table {
+  margin: 0 auto;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.table_element {
+  border: 1px solid;
+}
+
+.table_opts {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.table_opts__eliminar {
+  background-color: rgb(205, 89, 89);
+}
+
+.table_opts__actualizar {
+  background-color: rgb(88, 134, 203);
+}
+
+.form-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  width: 300px;
+  margin: 0 auto;
+}
+
+.form-submit > div {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.form-submit > div > label {
+  white-space: nowrap;
+}
+
+.error_message {
+  color: red;
+  font-size: 20px;
+}
+
+.box-1 {
+  border-radius: 1rem;
+}
+
+a {
+  text-decoration: underline;
+  color: white;
+}

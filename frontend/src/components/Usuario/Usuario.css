@@ -1,0 +1,33 @@
+#estudiante_main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-around;
+}
+
+.form-submit{
+    position: fixed;
+    inset: 0;
+    min-width: 400px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+
+    color: black;
+}
+
+.form-submit > form {
+    padding-top: 20px;
+    background-color: cadetblue;
+}
+
+.form-submit > form > div {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.form-submit__exit{
+    position: absolute;
+}
