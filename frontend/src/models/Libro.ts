@@ -1,13 +1,12 @@
 interface Libro {
   Id: number;
-  Id_prestamo: number;
   Titulo: string;
   Autor: string;
   ISBN: string;
   Disponibilidad: boolean;
   Descripcion: string;
+
+  Stock: number;
 }
 
-export type {
-    Libro
-}
+export type { Libro };

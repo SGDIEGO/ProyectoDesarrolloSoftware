@@ -336,7 +336,7 @@ function PrestamoComponent() {
 
         const libros = body.Data as Libro[];
         const librosDisponibles = libros
-          .filter((libro) => libro.Id_prestamo == -1)
+          .filter((libro) => libro.Stock > 0)
           .map((libro) => libro.Id);
 
         // Lista de libros disponibles

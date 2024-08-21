@@ -98,24 +98,6 @@ func (s *PService) Create(data *dto.PrestamoDTO) *utils.ResponseStr {
 		return &utils.ResponseStr{Data: nil, Err: "Usuario tiene registros pendientes de pago"}
 	}
 
-	// Verificar si existe libro
-	query = "SELECT id_prestamo FROM biblioteca.libros WHERE (id = ?);"
-	row = s.db.QueryRow(query, data.Id_libro)
-	if row.Err() == sql.ErrNoRows {
-		return &utils.ResponseStr{Data: nil, Err: row.Err().Error()}
-	}
-
-	// Verificar si libro ya tiene asignado prestamo
-	var pres any
-	if err := row.Scan(&pres); err != nil {
-		return &utils.ResponseStr{Data: nil, Err: err.Error()}
-	}
-
-	// Tiene asignado un valor
-	if pres != nil {
-		return &utils.ResponseStr{Data: nil, Err: "Libro ya tiene prestamo asignado"}
-	}
-
 	// Informacion de bibliotecario de memoria cache
 	var value, _ = s.cache.Get("session")
 	var body = value.(*models.Bibliotecario)
@@ -133,14 +115,21 @@ func (s *PService) Create(data *dto.PrestamoDTO) *utils.ResponseStr {
 		return &utils.ResponseStr{Data: nil, Err: err.Error()}
 	}
 
+	query = "INSERT INTO `biblioteca`.`ejemplar_libro` (`id_libro`, `id_prestamo`) VALUES (?, ?);"
+	// Ejecutar el query
+	res, err = s.db.Exec(query, data.Id_libro, lastId)
+	if err != nil {
+		return &utils.ResponseStr{Data: nil, Err: err.Error()}
+	}
+
 	_, err = res.RowsAffected()
 	if err != nil {
 		return &utils.ResponseStr{Data: nil, Err: err.Error()}
 	}
 
-	query = "UPDATE `biblioteca`.`libros` SET `id_prestamo` = ? WHERE (`id` = ?);"
+	query = "UPDATE libros SET stock = stock - 1 WHERE id = ?;"
 	// Ejecutar el query
-	_, err = s.db.Exec(query, int(lastId), data.Id_libro)
+	_, err = s.db.Exec(query, data.Id_libro)
 	if err != nil {
 		return &utils.ResponseStr{Data: nil, Err: "Update: " + err.Error()}
 	}

@@ -6,4 +6,5 @@ type LibroDTO struct {
 	ISBN           string
 	Disponibilidad bool
 	Descripcion    string
+	Stock          int
 }

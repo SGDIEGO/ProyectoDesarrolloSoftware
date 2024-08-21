@@ -13,6 +13,7 @@ interface RegisterLibroForm {
   ISBN: string;
   Disponibilidad: boolean;
   Descripcion: string;
+  Stock: number;
 }
 
 // Funcion para crear estudiante del menu
@@ -35,6 +36,7 @@ function CrearLibro(
       Autor: data.Autor,
       ISBN: data.ISBN,
       Descripcion: data.Descripcion,
+      Stock: data.Stock,
     })
       .then((v) => {
         let body = v as ResBody;
@@ -82,6 +84,11 @@ function CrearLibro(
         <div>
           <label htmlFor="Descripcion">Descripcion: </label>
           <input type="text" name="Descripcion" onChange={DataFormChange} />
+        </div>
+
+        <div>
+          <label htmlFor="Stock">Stock: </label>
+          <input type="text" name="Stock" onChange={DataFormChange} />
         </div>
 
         <input type="submit" value="Submit" />
@@ -133,21 +140,21 @@ function RenderLibros(ctx: LibroContextValues, disponible: boolean) {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Id prestamo</th>
             <th>Titulo</th>
             <th>Autor</th>
-            <th>Descripcin</th>
+            <th>Descripcion</th>
+            <th>Stock</th>
           </tr>
         </thead>
         <tbody>
           {ctx.list.map((v) =>
-            disponible == (v.Id_prestamo == -1) ? (
+            disponible == (v.Stock != 0) ? (
               <tr className="libro">
                 <td>{v.Id}</td>
-                <td>{v.Id_prestamo}</td>
                 <td>{v.Titulo}</td>
                 <td>{v.Autor}</td>
                 <td>{v.Descripcion}</td>
+                <td>{v.Stock}</td>
                 <td className="table_opts">
                   <button
                     className="btn btn-danger"
@@ -189,6 +196,7 @@ function LibroComponent() {
     ISBN: "",
     Disponibilidad: true,
     Descripcion: "",
+    Stock: 0,
   });
 
   return (
